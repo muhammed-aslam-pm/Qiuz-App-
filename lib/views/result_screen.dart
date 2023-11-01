@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:quizz_app/views/home_sceen.dart';
 
@@ -18,24 +16,25 @@ class ResultScreen extends StatelessWidget {
           children: [
             Text(
               "Your score : $score",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.w600,
                   fontSize: 40),
             ),
-            SizedBox(
+            const SizedBox(
               height: 200,
             ),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHome(),
-                    ),
-                  );
-                },
-                child: Text("Try Again"))
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHome(),
+                  ),
+                );
+              },
+              child: const Text("Try Again"),
+            )
           ],
         )),
       ),

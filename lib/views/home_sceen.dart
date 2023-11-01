@@ -4,7 +4,7 @@ import 'package:quizz_app/views/result_screen.dart';
 import '../utils/database/database.dart';
 
 class MyHome extends StatefulWidget {
-  MyHome({super.key});
+  const MyHome({super.key});
 
   @override
   State<MyHome> createState() => _MyHomeState();
@@ -12,10 +12,10 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   int questionNo = 0;
-  int checkValue = 0;
+  int checkValue = 5;
   int score = 0;
 
-  void onTap() {
+  void onNext() {
     if (questionNo == Database.questions.length - 1) {
       Navigator.push(
         context,
@@ -25,9 +25,14 @@ class _MyHomeState extends State<MyHome> {
       );
     } else {
       questionNo = questionNo + 1;
-      print("score = $score");
     }
+    setState(() {});
+  }
 
+  void onPrevius() {
+    if (questionNo > 0) {
+      questionNo--;
+    }
     setState(() {});
   }
 
@@ -35,28 +40,28 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 100, right: 30, left: 30),
-        child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 100, right: 30, left: 30),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [Text("${questionNo + 1}/10")],
               ),
-              SizedBox(
-                height: 15,
+              const SizedBox(
+                height: 40,
               ),
               Text(
                 Database.questions[questionNo]["question"],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
@@ -92,19 +97,32 @@ class _MyHomeState extends State<MyHome> {
                 ),
                 itemCount: 4,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(onPressed: onTap, child: Text("Next ->")),
+                  ElevatedButton(
+                    onPressed: () {
+                      onPrevius();
+                    },
+                    child: const Text("<- Previus"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      onNext();
+                      checkValue = 5;
+                      setState(() {});
+                    },
+                    child: const Text("Next ->  "),
+                  ),
                 ],
               )
             ],
           ),
         ),
-      )),
+      ),
     );
   }
 }
