@@ -13,12 +13,19 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   int questionNo = 0;
   int checkValue = 0;
+  int score = 0;
 
   void onTap() {
     if (questionNo == Database.questions.length - 1) {
-      questionNo = 0;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultScreen(score: score),
+        ),
+      );
     } else {
       questionNo = questionNo + 1;
+      print("score = $score");
     }
 
     setState(() {});
@@ -55,6 +62,9 @@ class _MyHomeState extends State<MyHome> {
                   child: InkWell(
                     onTap: () {
                       checkValue = index;
+                      if (index == Database.questions[questionNo]["answer"]) {
+                        score = score + 1;
+                      }
                       setState(() {});
                     },
                     child: Container(
